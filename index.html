@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Nnamdi Udoye | Salesforce Administrator</title>
+	<meta name="author" content="Nnamdi Udoye" />
+	<meta name="robots" content="index,follow" />
+	<meta name="theme-color" content="#0b6e5f" />
+	<meta
+		name="description"
+		content="Certified Salesforce Administrator Nnamdi Udoye delivers Service Cloud, Sales Cloud, automation, and data governance solutions for high-growth teams."
+	/>
+	<meta property="og:title" content="Nnamdi Udoye | Salesforce Administrator" />
+	<meta property="og:description" content="Salesforce Administrator specializing in Service Cloud, Sales Cloud, automation, and CRM data governance." />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://amarau9410.github.io/nnamdi-udoye/" />
+	<meta property="og:image" content="https://amarau9410.github.io/nnamdi-udoye/favicon.svg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Nnamdi Udoye | Salesforce Administrator" />
+	<meta name="twitter:description" content="Certified Salesforce Administrator focused on scalable automation and CRM excellence." />
+	<meta name="twitter:image" content="https://amarau9410.github.io/nnamdi-udoye/favicon.svg" />
+	<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+	<link rel="apple-touch-icon" href="favicon.svg" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+		rel="stylesheet"
+	/>
+	<style>
+		:root {
+			--bg: #f4f1ea;
+			--surface: #fffdf8;
+			--surface-alt: #efe9dc;
+			--text: #1d2a30;
+			--muted: #5a6a70;
+			--brand: #0b6e5f;
+			--brand-dark: #074c41;
+			--accent: #d98e04;
+			--border: #d9d1c3;
+			--shadow: 0 12px 28px rgba(13, 34, 40, 0.11);
+			--radius: 20px;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			font-family: "Manrope", sans-serif;
+			color: var(--text);
+			line-height: 1.65;
+			background:
+				radial-gradient(circle at 14% 12%, rgba(217, 142, 4, 0.18), transparent 30%),
+				radial-gradient(circle at 88% 28%, rgba(11, 110, 95, 0.17), transparent 34%),
+				linear-gradient(160deg, #f8f4ea 0%, #f0ece3 48%, #e8efe8 100%);
+			min-height: 100vh;
+			text-rendering: optimizeLegibility;
+		}
+
+		.grain {
+			position: fixed;
+			inset: 0;
+			pointer-events: none;
+			z-index: -1;
+			opacity: 0.22;
+			background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.08) 1px, transparent 0);
+			background-size: 24px 24px;
+		}
+
+		.container {
+			width: min(1100px, 92%);
+			margin: 0 auto;
+		}
+
+		header {
+			position: sticky;
+			top: 0;
+			backdrop-filter: blur(12px);
+			background: rgba(255, 253, 248, 0.8);
+			border-bottom: 1px solid rgba(217, 209, 195, 0.7);
+			z-index: 50;
+		}
+
+		.nav {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 1rem 0;
+			position: relative;
+		}
+
+		.brand {
+			font-family: "Space Grotesk", sans-serif;
+			font-weight: 700;
+			letter-spacing: 0.02em;
+			color: var(--brand-dark);
+			text-decoration: none;
+			font-size: 1.1rem;
+		}
+
+		nav ul {
+			display: flex;
+			list-style: none;
+			gap: 1.2rem;
+			align-items: center;
+		}
+
+		.menu-toggle {
+			display: none;
+			align-items: center;
+			justify-content: center;
+			padding: 0.45rem 0.65rem;
+			border-radius: 10px;
+			border: 1px solid var(--border);
+			background: #fff;
+			color: var(--brand-dark);
+			font-weight: 800;
+			font-size: 1rem;
+			line-height: 1;
+			cursor: pointer;
+		}
+
+		nav a {
+			text-decoration: none;
+			color: var(--text);
+			font-weight: 600;
+			font-size: 0.95rem;
+			transition: color 0.2s ease;
+		}
+
+		nav a:hover {
+			color: var(--brand);
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			text-decoration: none;
+			border-radius: 999px;
+			padding: 0.74rem 1.15rem;
+			font-weight: 700;
+			transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+			cursor: pointer;
+			border: none;
+		}
+
+		.btn-primary {
+			color: #fff;
+			background: linear-gradient(130deg, var(--brand) 0%, #128a77 100%);
+			box-shadow: 0 10px 20px rgba(11, 110, 95, 0.24);
+		}
+
+		.btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 12px 24px rgba(11, 110, 95, 0.31);
+		}
+
+		.btn-secondary {
+			color: var(--brand-dark);
+			background: rgba(255, 255, 255, 0.7);
+			border: 1px solid var(--border);
+		}
+
+		.btn-secondary:hover {
+			transform: translateY(-2px);
+			background: #fff;
+		}
+
+		.hero {
+			padding: 6rem 0 4.3rem;
+			display: grid;
+			grid-template-columns: 1.2fr 0.8fr;
+			gap: 2rem;
+			align-items: center;
+		}
+
+		.hero h1 {
+			font-family: "Space Grotesk", sans-serif;
+			font-size: clamp(2.1rem, 5.2vw, 4.2rem);
+			line-height: 1.08;
+			margin-bottom: 1.1rem;
+			letter-spacing: -0.03em;
+		}
+
+		.hero h1 .highlight {
+			color: var(--brand);
+			display: inline-block;
+		}
+
+		.hero p {
+			color: var(--muted);
+			max-width: 60ch;
+			margin-bottom: 1.6rem;
+			font-size: 1.05rem;
+		}
+
+		.hero-actions {
+			display: flex;
+			gap: 0.8rem;
+			flex-wrap: wrap;
+			margin-bottom: 1.4rem;
+		}
+
+		.stats {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(90px, 1fr));
+			gap: 0.9rem;
+			max-width: 560px;
+		}
+
+		.stat-card {
+			background: rgba(255, 255, 255, 0.75);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 0.9rem;
+			box-shadow: var(--shadow);
+		}
+
+		.stat-card strong {
+			display: block;
+			font-size: 1.2rem;
+			color: var(--brand-dark);
+			line-height: 1.2;
+		}
+
+		.stat-card span {
+			font-size: 0.9rem;
+			color: var(--muted);
+		}
+
+		.hero-panel {
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			padding: 1.2rem;
+			transform: rotate(1.2deg);
+		}
+
+		.hero-panel .card {
+			background: linear-gradient(150deg, #fcfaf5 0%, #eef3ee 100%);
+			border: 1px solid var(--border);
+			border-radius: 14px;
+			padding: 1rem;
+			margin-bottom: 0.8rem;
+		}
+
+		.hero-panel h3 {
+			font-size: 1rem;
+			margin-bottom: 0.2rem;
+		}
+
+		.hero-panel p {
+			color: var(--muted);
+			font-size: 0.92rem;
+		}
+
+		section {
+			padding: 1.2rem 0 3.2rem;
+		}
+
+		.section-heading {
+			font-family: "Space Grotesk", sans-serif;
+			margin-bottom: 1.15rem;
+			font-size: clamp(1.4rem, 3vw, 2rem);
+			letter-spacing: -0.02em;
+		}
+
+		.about {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1rem;
+		}
+
+		.panel {
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			padding: 1.3rem;
+		}
+
+		.panel p {
+			color: var(--muted);
+			margin-bottom: 0.9rem;
+		}
+
+		.skills-grid {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0.7rem;
+			list-style: none;
+		}
+
+		.skills-grid li {
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			padding: 0.6rem 0.75rem;
+			font-weight: 600;
+			background: #fff;
+		}
+
+		.services {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1rem;
+		}
+
+		.timeline {
+			display: grid;
+			gap: 0.9rem;
+		}
+
+		.timeline-item {
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-left: 4px solid var(--brand);
+			border-radius: 14px;
+			padding: 1rem;
+			box-shadow: var(--shadow);
+		}
+
+		.timeline-item h3 {
+			font-size: 1.05rem;
+			margin-bottom: 0.15rem;
+			color: var(--brand-dark);
+		}
+
+		.timeline-item .meta {
+			display: block;
+			color: var(--muted);
+			font-weight: 600;
+			font-size: 0.9rem;
+			margin-bottom: 0.45rem;
+		}
+
+		.timeline-item ul {
+			padding-left: 1.1rem;
+			color: var(--muted);
+		}
+
+		.timeline-item li {
+			margin-bottom: 0.45rem;
+		}
+
+		.cert-grid {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 0.8rem;
+		}
+
+		.cert-card {
+			background: linear-gradient(145deg, #fffaf2 0%, #f2f5ef 100%);
+			border: 1px solid var(--border);
+			border-radius: 14px;
+			padding: 0.9rem;
+			font-weight: 700;
+			color: var(--brand-dark);
+		}
+
+		.case-grid {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1rem;
+		}
+
+		.case-card {
+			background: var(--surface);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 1rem;
+			box-shadow: var(--shadow);
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.case-card:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 15px 30px rgba(13, 34, 40, 0.14);
+		}
+
+		.case-kpi {
+			display: inline-block;
+			margin-bottom: 0.4rem;
+			font-weight: 800;
+			color: var(--brand);
+		}
+
+		.case-card h3 {
+			font-size: 1.03rem;
+			margin-bottom: 0.35rem;
+			color: var(--brand-dark);
+		}
+
+		.case-card p {
+			color: var(--muted);
+			font-size: 0.95rem;
+		}
+
+		.service-card {
+			background: var(--surface-alt);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 1rem;
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.service-card:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 14px 28px rgba(13, 34, 40, 0.13);
+		}
+
+		.service-card h3 {
+			margin-bottom: 0.4rem;
+			font-size: 1.05rem;
+			color: var(--brand-dark);
+		}
+
+		.service-card p {
+			color: var(--muted);
+			font-size: 0.95rem;
+		}
+
+		.contact {
+			margin-bottom: 2.2rem;
+		}
+
+		.contact-card {
+			background: linear-gradient(140deg, #ffffff 0%, #e9f2ef 100%);
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+			padding: 1.4rem;
+			box-shadow: var(--shadow);
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 1rem;
+			flex-wrap: wrap;
+		}
+
+		.contact-card p {
+			color: var(--muted);
+			margin-top: 0.25rem;
+		}
+
+		.contact-links {
+			display: flex;
+			gap: 0.7rem;
+			flex-wrap: wrap;
+		}
+
+		footer {
+			border-top: 1px solid rgba(217, 209, 195, 0.8);
+			padding: 1.3rem 0 1.6rem;
+			color: #55656b;
+			font-size: 0.9rem;
+		}
+
+		.reveal {
+			opacity: 0;
+			transform: translateY(18px);
+			transition: opacity 0.55s ease, transform 0.55s ease;
+		}
+
+		.reveal.show {
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		@media (max-width: 940px) {
+			.hero,
+			.about {
+				grid-template-columns: 1fr;
+			}
+
+			.hero-panel {
+				transform: none;
+			}
+
+			.services {
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.cert-grid {
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.case-grid {
+				grid-template-columns: 1fr 1fr;
+			}
+		}
+
+		@media (max-width: 680px) {
+			.menu-toggle {
+				display: inline-flex;
+			}
+
+			nav ul {
+				display: none;
+				position: absolute;
+				top: calc(100% + 8px);
+				right: 0;
+				width: min(260px, 82vw);
+				padding: 0.8rem;
+				background: rgba(255, 253, 248, 0.98);
+				border: 1px solid var(--border);
+				border-radius: 14px;
+				box-shadow: var(--shadow);
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 0.7rem;
+			}
+
+			nav ul.open {
+				display: flex;
+			}
+
+			.stats {
+				grid-template-columns: 1fr;
+			}
+
+			.skills-grid,
+			.services,
+			.cert-grid,
+			.case-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.hero {
+				padding-top: 4.2rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="grain" aria-hidden="true"></div>
+
+	<header>
+		<div class="container nav">
+			<a class="brand" href="#home">Nnamdi Udoye</a>
+			<nav aria-label="Primary navigation">
+				<button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Open navigation menu">Menu</button>
+				<ul id="primary-menu">
+					<li><a href="#about">About</a></li>
+					<li><a href="#experience">Experience</a></li>
+					<li><a href="#services">Services</a></li>
+					<li><a href="#case-studies">Case Studies</a></li>
+					<li><a href="#certifications">Certifications</a></li>
+					<li><a href="#contact">Contact</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<main id="home" class="container">
+		<section class="hero reveal">
+			<div>
+				<h1>
+					Nnamdi Udoye<br />
+					<span class="highlight">Salesforce Administrator</span>
+				</h1>
+				<p>
+					Certified Salesforce Administrator and Advanced Administrator with 3+ years of
+					hands-on platform delivery and 15+ years in enterprise IT support. I build secure,
+					scalable Service Cloud and Sales Cloud solutions for fast-growing teams.
+				</p>
+				<div class="hero-actions">
+					<a class="btn btn-primary" href="#contact">Hire Me</a>
+					<a class="btn btn-secondary" href="#services">View Services</a>
+					<a class="btn btn-secondary" href="Nnamdi_Udoye_Salesforce_CV10-03-2026.docx" download>Download CV</a>
+				</div>
+				<div class="stats" aria-label="Experience highlights">
+					<article class="stat-card">
+						<strong>3+ Years</strong>
+						<span>Salesforce Experience</span>
+					</article>
+					<article class="stat-card">
+						<strong>150,000+</strong>
+						<span>Merchants Supported</span>
+					</article>
+					<article class="stat-card">
+						<strong>15+ Years</strong>
+						<span>Enterprise IT Expertise</span>
+					</article>
+				</div>
+			</div>
+
+			<aside class="hero-panel" aria-label="Quick profile highlights">
+				<div class="card">
+					<h3>Service Cloud Leadership</h3>
+					<p>Lead administrator for global support operations across four international markets.</p>
+				</div>
+				<div class="card">
+					<h3>Flow Automation</h3>
+					<p>Built advanced Screen Flows and case-routing logic that removed manual bottlenecks.</p>
+				</div>
+				<div class="card">
+					<h3>DevOps & Governance</h3>
+					<p>Deliver reliable Salesforce releases with Copado, Azure DevOps, and robust access controls.</p>
+				</div>
+			</aside>
+		</section>
+
+		<section id="about" class="reveal">
+			<h2 class="section-heading">About Me</h2>
+			<div class="about">
+				<article class="panel">
+					<p>
+						I specialize in translating complex business requirements into practical Salesforce
+						solutions using Flow Builder, data governance, and role-based security architecture.
+					</p>
+					<p>
+						My work spans Service Cloud, Sales Cloud, and Field Service Lightning, with a strong
+						focus on stakeholder collaboration, adoption, and high-quality data foundations.
+					</p>
+				</article>
+				<article class="panel">
+					<h3 style="margin-bottom: 0.6rem; color: var(--brand-dark);">Core Skills</h3>
+					<ul class="skills-grid">
+						<li>Service Cloud & Sales Cloud</li>
+						<li>Field Service Lightning</li>
+						<li>Experience Cloud</li>
+						<li>Flow Builder (Screen, Record, Scheduled)</li>
+						<li>Validation Rules & Omni-Channel</li>
+						<li>Data Loader, Inspector & SOQL</li>
+						<li>Copado, Azure DevOps & VS Code</li>
+						<li>Roles, Profiles & Permission Sets</li>
+					</ul>
+				</article>
+			</div>
+		</section>
+
+		<section id="experience" class="reveal">
+			<h2 class="section-heading">Professional Experience</h2>
+			<div class="timeline">
+				<article class="timeline-item">
+					<h3>Salesforce Administrator | Dojo (Fintech)</h3>
+					<span class="meta">Remote/Bristol | Aug 2025 - Present</span>
+					<ul>
+						<li>Support a global Service Cloud operation serving over 150,000 merchants across four markets.</li>
+						<li>Architected Screen Flows for contact-to-account linking, eliminating manual entry and improving data accuracy.</li>
+						<li>Managed CI/CD releases in Copado and Azure DevOps with reliable, low-risk deployments.</li>
+						<li>Migrated legacy profile access to a scalable Permission Set model for stronger security governance.</li>
+					</ul>
+				</article>
+				<article class="timeline-item">
+					<h3>Salesforce Administrator / IT Support Analyst | Unite Students</h3>
+					<span class="meta">Bristol, UK | Mar 2016 - Aug 2025</span>
+					<ul>
+						<li>Administered Sales Cloud, Service Cloud, and Field Service Lightning across a national estate of 150+ properties.</li>
+						<li>Built case-routing and workflow automations to improve support response speed and SLA visibility.</li>
+						<li>Created KPI dashboards and implemented deduplication controls for sustained data quality improvements.</li>
+						<li>Delivered user training and documentation to increase Salesforce adoption across operational teams.</li>
+					</ul>
+				</article>
+			</div>
+		</section>
+
+		<section id="services" class="reveal">
+			<h2 class="section-heading">What I Can Do For You</h2>
+			<div class="services">
+				<article class="service-card">
+					<h3>Salesforce Configuration</h3>
+					<p>
+						Configure objects, record types, layouts, and security models aligned to your operational goals.
+					</p>
+				</article>
+				<article class="service-card">
+					<h3>Automation & Case Management</h3>
+					<p>
+						Design robust Flows, routing, validations, and Omni-Channel processes to reduce manual effort.
+					</p>
+				</article>
+				<article class="service-card">
+					<h3>Data Governance & Reporting</h3>
+					<p>
+						Improve data integrity, enforce governance standards, and deliver dashboards leadership can trust.
+					</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="case-studies" class="reveal">
+			<h2 class="section-heading">Selected Case Studies</h2>
+			<div class="case-grid">
+				<article class="case-card">
+					<span class="case-kpi">100% Data Accuracy</span>
+					<h3>Contact-to-Account Automation</h3>
+					<p>
+						Designed advanced Screen Flows to automate contact linking in Salesforce,
+						removing manual entry and dramatically improving merchant data quality.
+					</p>
+				</article>
+				<article class="case-card">
+					<span class="case-kpi">Faster Support Handling</span>
+					<h3>Quick Text Standardization</h3>
+					<p>
+						Built a structured Quick Text framework for support teams that reduced Average
+						Handle Time and improved consistency of customer communication.
+					</p>
+				</article>
+				<article class="case-card">
+					<span class="case-kpi">Zero-Downtime Delivery</span>
+					<h3>Secure CI/CD Release Model</h3>
+					<p>
+						Implemented dependable release pipelines in Copado and Azure DevOps while
+						migrating access from profiles to Permission Sets for stronger compliance.
+					</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="certifications" class="reveal">
+			<h2 class="section-heading">Education & Certifications</h2>
+			<div class="cert-grid">
+				<article class="cert-card">Salesforce Certified Advanced Administrator</article>
+				<article class="cert-card">Salesforce Certified Administrator</article>
+				<article class="cert-card">Salesforce Certified Service Cloud Consultant</article>
+				<article class="cert-card">Salesforce Certified Sales Cloud Consultant</article>
+				<article class="cert-card">B.Sc. Computing - University of Greenwich</article>
+				<article class="cert-card">CompTIA A+ CE | Microsoft 365 Fundamentals</article>
+			</div>
+		</section>
+
+		<section id="contact" class="contact reveal">
+			<div class="contact-card">
+				<div>
+					<h2 class="section-heading" style="margin-bottom: 0;">Let's Work Together</h2>
+					<p>Bristol, United Kingdom | Available for Salesforce administration and CRM optimization projects.</p>
+				</div>
+				<div class="contact-links">
+					<a class="btn btn-primary" href="mailto:nnamdiudoye@gmail.com">Email Nnamdi</a>
+					<a class="btn btn-secondary" href="tel:+447837228031">Call +44 7837 228031</a>
+					<a class="btn btn-secondary" href="Nnamdi_Udoye_Salesforce_CV10-03-2026.docx" download>Download CV</a>
+					<a class="btn btn-secondary" href="https://linkedin.com/in/nnamdiudoye-74441847" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<div class="container">
+			<p>© <span id="year"></span> Nnamdi Udoye. Salesforce Administrator.</p>
+		</div>
+	</footer>
+
+	<script>
+		document.getElementById("year").textContent = new Date().getFullYear();
+
+		const menuToggle = document.getElementById("menuToggle");
+		const primaryMenu = document.getElementById("primary-menu");
+
+		menuToggle.addEventListener("click", () => {
+			const isOpen = primaryMenu.classList.toggle("open");
+			menuToggle.setAttribute("aria-expanded", String(isOpen));
+			menuToggle.textContent = isOpen ? "Close" : "Menu";
+		});
+
+		primaryMenu.querySelectorAll("a").forEach((link) => {
+			link.addEventListener("click", () => {
+				if (window.innerWidth <= 680) {
+					primaryMenu.classList.remove("open");
+					menuToggle.setAttribute("aria-expanded", "false");
+					menuToggle.textContent = "Menu";
+				}
+			});
+		});
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("show");
+					}
+				});
+			},
+			{ threshold: 0.15 }
+		);
+
+		document.querySelectorAll(".reveal").forEach((element, index) => {
+			element.style.transitionDelay = `${index * 90}ms`;
+			observer.observe(element);
+		});
+	</script>
+</body>
+</html>
