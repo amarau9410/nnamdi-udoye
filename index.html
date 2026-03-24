@@ -4,6 +4,16 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Nnamdi Udoye | Salesforce Administrator</title>
+	<!-- Replace G-XXXXXXXXXX with your GA4 Measurement ID -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag("js", new Date());
+		gtag("config", "G-XXXXXXXXXX");
+	</script>
 	<meta name="author" content="Nnamdi Udoye" />
 	<meta name="robots" content="index,follow" />
 	<meta name="theme-color" content="#0b6e5f" />
@@ -819,6 +829,72 @@
 		document.querySelectorAll(".reveal").forEach((element, index) => {
 			element.style.transitionDelay = `${index * 90}ms`;
 			observer.observe(element);
+		});
+
+		const trackGAEvent = (eventName, payload) => {
+			if (typeof window.gtag !== "function") {
+				return;
+			}
+
+			window.gtag("event", eventName, payload);
+		};
+
+		document.addEventListener("click", (event) => {
+			const target = event.target.closest("a, button");
+			if (!target) {
+				return;
+			}
+
+			const elementType = target.tagName.toLowerCase();
+			const label = target.getAttribute("aria-label") || target.textContent.trim() || target.id || "unlabeled";
+			const destination = elementType === "a" ? target.getAttribute("href") || "no_href" : window.location.pathname;
+
+			trackGAEvent("site_click", {
+				event_category: elementType,
+				event_label: label,
+				link_url: destination,
+				page_location: window.location.href,
+			});
+
+			if (elementType !== "a") {
+				return;
+			}
+
+			const href = (target.getAttribute("href") || "").trim();
+
+			if (href.toLowerCase().endsWith(".docx") || target.hasAttribute("download")) {
+				trackGAEvent("cv_download", {
+					file_name: href,
+					link_text: label,
+					page_location: window.location.href,
+				});
+			}
+
+			if (href.toLowerCase().includes("linkedin.com")) {
+				trackGAEvent("linkedin_click", {
+					outbound_url: href,
+					link_text: label,
+					page_location: window.location.href,
+				});
+			}
+
+			if (href.toLowerCase().startsWith("mailto:")) {
+				trackGAEvent("contact_email_click", {
+					contact_method: "email",
+					contact_target: href.replace(/^mailto:/i, ""),
+					link_text: label,
+					page_location: window.location.href,
+				});
+			}
+
+			if (href.toLowerCase().startsWith("tel:")) {
+				trackGAEvent("contact_phone_click", {
+					contact_method: "phone",
+					contact_target: href.replace(/^tel:/i, ""),
+					link_text: label,
+					page_location: window.location.href,
+				});
+			}
 		});
 	</script>
 </body>
