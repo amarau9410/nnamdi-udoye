@@ -593,7 +593,7 @@
 					scalable Service Cloud and Sales Cloud solutions for fast-growing teams.
 				</p>
 				<div class="hero-actions">
-					<a class="btn btn-primary" href="#contact">Hire Me</a>
+					<a class="btn btn-primary" href="#contact" data-analytics-event="hire_me_click">Hire Me</a>
 					<a class="btn btn-secondary" href="#services">View Services</a>
 					<a class="btn btn-secondary" href="Nnamdi_Udoye_Salesforce_CV10-03-2026.docx" download>Download CV</a>
 				</div>
@@ -839,6 +839,40 @@
 			window.gtag("event", eventName, payload);
 		};
 
+		const trackedScrollDepths = new Set();
+		const scrollMilestones = [25, 50, 75, 90];
+
+		const trackScrollDepth = () => {
+			const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+			if (scrollableHeight <= 0) {
+				return;
+			}
+
+			const scrollPercent = Math.round((window.scrollY / scrollableHeight) * 100);
+
+			scrollMilestones.forEach((milestone) => {
+				if (scrollPercent >= milestone && !trackedScrollDepths.has(milestone)) {
+					trackedScrollDepths.add(milestone);
+					trackGAEvent("scroll_depth", {
+						scroll_percent: milestone,
+						page_location: window.location.href,
+					});
+				}
+			});
+		};
+
+		window.addEventListener("scroll", trackScrollDepth, { passive: true });
+		window.addEventListener("load", trackScrollDepth);
+
+		[30, 90].forEach((seconds) => {
+			window.setTimeout(() => {
+				trackGAEvent("time_on_page", {
+					seconds,
+					page_location: window.location.href,
+				});
+			}, seconds * 1000);
+		});
+
 		document.addEventListener("click", (event) => {
 			const target = event.target.closest("a, button");
 			if (!target) {
@@ -861,6 +895,15 @@
 			}
 
 			const href = (target.getAttribute("href") || "").trim();
+			const customEventName = target.dataset.analyticsEvent;
+
+			if (customEventName) {
+				trackGAEvent(customEventName, {
+					link_text: label,
+					link_url: href || destination,
+					page_location: window.location.href,
+				});
+			}
 
 			if (href.toLowerCase().endsWith(".docx") || target.hasAttribute("download")) {
 				trackGAEvent("cv_download", {
