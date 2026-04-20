@@ -387,13 +387,15 @@
 			color: var(--brand-dark);
 		}
 
-		.case-grid {
+		.case-grid,
+		.project-grid {
 			display: grid;
 			grid-template-columns: repeat(3, minmax(0, 1fr));
 			gap: 1rem;
 		}
 
-		.case-card {
+		.case-card,
+		.project-card {
 			background: var(--surface);
 			border: 1px solid var(--border);
 			border-radius: 16px;
@@ -402,7 +404,8 @@
 			transition: transform 0.2s ease, box-shadow 0.2s ease;
 		}
 
-		.case-card:hover {
+		.case-card:hover,
+		.project-card:hover {
 			transform: translateY(-3px);
 			box-shadow: 0 15px 30px rgba(13, 34, 40, 0.14);
 		}
@@ -414,15 +417,33 @@
 			color: var(--brand);
 		}
 
-		.case-card h3 {
+		.case-card h3,
+		.project-card h3 {
 			font-size: 1.03rem;
 			margin-bottom: 0.35rem;
 			color: var(--brand-dark);
 		}
 
-		.case-card p {
+		.case-card p,
+		.project-card p {
 			color: var(--muted);
 			font-size: 0.95rem;
+		}
+
+		.project-intro {
+			max-width: 72ch;
+			margin: -0.35rem 0 1rem;
+			color: var(--muted);
+		}
+
+		.project-list {
+			padding-left: 1.1rem;
+			margin-top: 0.7rem;
+			color: var(--muted);
+		}
+
+		.project-list li {
+			margin-bottom: 0.45rem;
 		}
 
 		.service-card {
@@ -505,7 +526,7 @@
 				transform: none;
 			}
 
-			services {
+			.services {
 				grid-template-columns: 1fr 1fr;
 			}
 
@@ -513,7 +534,8 @@
 				grid-template-columns: 1fr 1fr;
 			}
 
-			.case-grid {
+			.case-grid,
+			.project-grid {
 				grid-template-columns: 1fr 1fr;
 			}
 		}
@@ -547,10 +569,11 @@
 				grid-template-columns: 1fr;
 			}
 
-			skills-grid,
-			services,
-			cert-grid,
-			case-grid {
+			.skills-grid,
+			.services,
+			.cert-grid,
+			.case-grid,
+			.project-grid {
 				grid-template-columns: 1fr;
 			}
 
@@ -572,7 +595,7 @@
 					<li><a href="#about">About</a></li>
 					<li><a href="#experience">Experience</a></li>
 					<li><a href="#services">Services</a></li>
-					<li><a href="#case-studies">Case Studies</a></li>
+					<li><a href="#projects">Projects</a></li>
 					<li><a href="#certifications">Certifications</a></li>
 					<li><a href="#contact">Contact</a></li>
 				</ul>
@@ -594,7 +617,7 @@
 				</p>
 				<div class="hero-actions">
 					<a class="btn btn-primary" href="#contact" data-analytics-event="hire_me_click">Hire Me</a>
-					<a class="btn btn-secondary" href="#services">View Services</a>
+					<a class="btn btn-secondary" href="#projects">View Projects</a>
 					<a class="btn btn-secondary" href="Nnamdi_Udoye_Salesforce_CV26-03-26.docx" download>CV in Word</a>
 					<a class="btn btn-secondary" href="Nnamdi_Udoye_Salesforce_CV26-03-26.pdf" download>CV in PDF</a>
 				</div>
@@ -730,32 +753,42 @@
 			</div>
 		</section>
 
-		<section id="case-studies" class="reveal">
-			<h2 class="section-heading">Selected Case Studies</h2>
-			<div class="case-grid">
-				<article class="case-card">
-					<span class="case-kpi">100% Data Accuracy</span>
-					<h3>Contact-to-Account Automation</h3>
-					<p>
-						Designed advanced Screen Flows to automate contact linking in Salesforce,
-						removing manual entry and dramatically improving merchant data quality.
-					</p>
+		<section id="projects" class="reveal">
+			<h2 class="section-heading">Featured Salesforce Projects</h2>
+			<p class="project-intro">
+				A portfolio-style showcase of completed Salesforce work, highlighting the business challenge,
+				the solution I delivered, and the impact achieved for users and leadership.
+			</p>
+			<div class="project-grid">
+				<article class="project-card">
+					<span class="case-kpi">Service Cloud Automation</span>
+					<h3>Contact-to-Account Matching Flow</h3>
+					<p>Designed a guided flow experience to eliminate manual merchant matching and improve record accuracy.</p>
+					<ul class="project-list">
+						<li><strong>Challenge:</strong> support teams were spending too much time linking records by hand.</li>
+						<li><strong>What I delivered:</strong> Screen Flow logic, validation checks, and cleaner routing inputs.</li>
+						<li><strong>Outcome:</strong> 100% accurate linkage and a faster, more reliable support process.</li>
+					</ul>
 				</article>
-				<article class="case-card">
-					<span class="case-kpi">Faster Support Handling</span>
-					<h3>Quick Text Standardization</h3>
-					<p>
-						Built a structured Quick Text framework for support teams that reduced Average
-						Handle Time and improved consistency of customer communication.
-					</p>
+				<article class="project-card">
+					<span class="case-kpi">Operations Efficiency</span>
+					<h3>Quick Text Framework Standardization</h3>
+					<p>Created a reusable communication framework so agents could respond faster while keeping tone and content consistent.</p>
+					<ul class="project-list">
+						<li><strong>Challenge:</strong> inconsistent replies were increasing handling time and reducing quality control.</li>
+						<li><strong>What I delivered:</strong> governed Quick Text templates, naming standards, and team adoption support.</li>
+						<li><strong>Outcome:</strong> lower Average Handle Time and more consistent customer communication.</li>
+					</ul>
 				</article>
-				<article class="case-card">
-					<span class="case-kpi">Zero-Downtime Delivery</span>
-					<h3>Secure CI/CD Release Model</h3>
-					<p>
-						Implemented dependable release pipelines in Copado and Azure DevOps while
-						migrating access from profiles to Permission Sets for stronger compliance.
-					</p>
+				<article class="project-card">
+					<span class="case-kpi">Secure Delivery</span>
+					<h3>Permission Set and Release Governance</h3>
+					<p>Helped modernize access and release control using scalable permission design and dependable deployment practices.</p>
+					<ul class="project-list">
+						<li><strong>Challenge:</strong> legacy access models made governance and audits harder to manage.</li>
+						<li><strong>What I delivered:</strong> Permission Set migration support, Copado release discipline, and lower-risk change control.</li>
+						<li><strong>Outcome:</strong> stronger compliance posture and predictable zero-downtime releases.</li>
+					</ul>
 				</article>
 			</div>
 		</section>
