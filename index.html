@@ -905,6 +905,16 @@
 		});
 
 		const trackGAEvent = (eventName, payload) => {
+			// GA4 Key Events Setup:
+			// The following events are configured for GA4 conversion tracking:
+			// - 'cv_download': Fired when user downloads your resume (CV in Word or PDF)
+			// - 'generate_lead': Fired when user clicks Email Nnamdi link (GA4 pre-configured conversion event)
+			// To mark these as Key events in GA4:
+			// 1. Go to GA4 Admin > Events
+			// 2. Click 'Create event' for 'cv_download' or it will appear in suggestions
+			// 3. 'generate_lead' is automatically a GA4 key event (pre-configured conversion)
+			// 4. Once marked, they'll appear in Acquisition reports and conversion funnels
+		
 			if (typeof window.gtag !== "function") {
 				return;
 			}
@@ -995,7 +1005,8 @@
 			}
 
 			if (href.toLowerCase().startsWith("mailto:")) {
-				trackGAEvent("contact_email_click", {
+				// GA4 Key Event: 'generate_lead' is a pre-configured GA4 conversion event
+				trackGAEvent("generate_lead", {
 					contact_method: "email",
 					contact_target: href.replace(/^mailto:/i, ""),
 					link_text: label,
