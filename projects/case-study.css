@@ -207,6 +207,31 @@ main {
 	gap: 0.9rem;
 }
 
+.flow-preview {
+	display: grid;
+	gap: 0.7rem;
+	margin-bottom: 0.35rem;
+}
+
+.flow-preview img {
+	width: 100%;
+	border-radius: 18px;
+	border: 1px solid var(--border);
+	box-shadow: 0 16px 30px rgba(13, 34, 40, 0.14);
+	background: #fff;
+}
+
+.flow-preview figcaption {
+	font-size: 0.86rem;
+	color: var(--muted);
+}
+
+.flow-preview figcaption strong {
+	display: block;
+	color: var(--brand-dark);
+	margin-bottom: 0.2rem;
+}
+
 .side-panel h2,
 .content-card h2 {
 	font-family: "Space Grotesk", sans-serif;
@@ -285,6 +310,14 @@ main {
 		radial-gradient(circle at 78% 22%, rgba(217, 142, 4, 0.22), transparent 24%),
 		linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
 	position: relative;
+}
+
+.shot-image {
+	display: block;
+	width: 100%;
+	height: 220px;
+	object-fit: cover;
+	background: #fff;
 }
 
 .shot-frame::after {

@@ -3,50 +3,71 @@ const projects = {
 		badge: 'Service Cloud Automation',
 		title: 'Contact-to-Account Matching Flow',
 		summary:
-			'Designed a guided Salesforce flow to remove manual merchant matching, improve record accuracy, and standardize the way support teams connected people to the right account.',
+			'Designed a guided Salesforce flow to restrict Contact selection to Account-linked Contacts on Case creation, reduce data mismatches, and standardize the way support teams connected people to the right account.',
 		metrics: [
-			{ value: '100%', label: 'accurate linkage after automation' },
-			{ value: 'Faster', label: 'agent handoff and case resolution' },
-			{ value: 'Fewer', label: 'manual merges and rework' },
-			{ value: 'Cleaner', label: 'routing and account data' }
+			{ value: 'Filtered', label: 'contacts shown only for the selected Account' },
+			{ value: 'Auto-clear', label: 'Contact when Account changes' },
+			{ value: 'Dual-path', label: 'support for Flow and standard Details tab' },
+			{ value: 'No mismatch', label: 'between Case, Contact, and Account' }
 		],
 		businessCase: [
-			'Support teams were spending too much time manually linking contacts to accounts, which created delays, duplicate records, and inconsistent case handling.',
-			'The business needed a guided, repeatable process that would preserve data quality while making the workflow easier for agents to follow.'
+			'Support teams needed the Contact field on a Case to only display Contacts associated with the selected Account when creating a case in the Service Console.',
+			'The business wanted a guided experience that would prevent confusion, reduce contact selection errors, and improve data quality across Cases, Contacts, and Accounts.'
 		],
 		solutionDesign: [
-			'Used a guided Screen Flow to collect the right identifiers and present only the relevant account options.',
-			'Added validation checks so users could not complete the process with incomplete or conflicting data.',
-			'Trapped the automation into a support-friendly experience that reduced switching between screens and record edits.'
+			'Built a Screen Flow component that appears on the right-hand side of the Case record when Account is populated and Contact is blank.',
+			'Configured the Flow to show only Contacts linked to the selected Account while leaving the standard Details tab lookup unchanged for manual editing.',
+			'Added logic to clear the Contact field automatically when the Account changes and to hide the Flow when Account is blank.'
 		],
 		poc: [
-			'Built a proof-of-concept flow with a small set of test records.',
-			'Validated the logic against common edge cases like duplicate merchants, missing fields, and incorrect matches.',
-			'Confirmed that the output was consistent enough to move into a broader support process.'
+			'Proved the approach in a sandbox with a flow that fetched the Case, checked whether Account existed, and branched to a no-account or has-account path.',
+			'Tested the filtered contact collection against sample Accounts with and without related Contacts.',
+			'Confirmed that the standard Details tab still allowed normal Contact selection while the Flow provided the filtered side-panel experience.'
 		],
 		implementation: [
-			'Mapped the business rules for identifying the right account and identifying failure points.',
-			'Configured the flow screens, decision logic, and record update actions.',
-			'Tested the experience with support users and refined labels, prompts, and error handling.',
-			'Deployed the change with monitoring so the team could validate accuracy in live usage.'
+			'Mapped the ticket requirements into three visibility rules: show the component only when Account is not blank and Contact is blank, hide it when Account is blank, and clear the Contact when the Account changes.',
+			'Configured the Flow to get the Case, branch on whether the Case has an Account, fetch the Account-linked Contacts, loop the results into a collection, and then present the Contact selection screen.',
+			'Added no-account and no-contacts screens so the user sees clear feedback instead of a broken experience.',
+			'Used the Contact update step to write the selected Contact back to the Case record directly.'
 		],
 		impact: [
-			'Improved data accuracy by standardizing the matching journey.',
-			'Reduced manual effort for support agents.',
-			'Created a repeatable pattern that can be reused across similar service processes.'
+			'Prevented data mismatches between Cases, Contacts, and Accounts.',
+			'Reduced time spent searching for the correct Contact during case creation.',
+			'Improved confidence in reporting, assignment logic, and overall data integrity.'
+		],
+		acceptanceCriteria: [
+			'When Account is populated and Contact is blank, show a right-side Flow component above the Related panel.',
+			'Only show Contacts associated with the selected Account in that component.',
+			'When using the Details tab, keep the standard Contact lookup available for all Contacts in Salesforce.',
+			'Hide the component when Account is blank.',
+			'Clear the Contact automatically when Account changes and refresh the filtered list.'
+		],
+		flowSteps: [
+			'Start the Flow and get the current Case record.',
+			'Check whether the Case has an Account.',
+			'If no Account exists, show a no-account message and exit.',
+			'If Account exists, get Contacts for that Account.',
+			'If no Contacts are found, show a no-contacts message and exit.',
+			'If Contacts exist, loop them into a collection and present the filtered Contact selection screen.',
+			'Update the Case with the selected Contact and finish.'
+		],
+		solutionNotes: [
+			'The design intentionally keeps the standard Details tab lookup in place for manual edits while using the Flow as the guided experience in the Console.',
+			'The side-panel component is intended to appear only when Account is present and Contact is blank, matching the ticket logic.',
+			'The Flow Builder design follows an Auto-Layout pattern with Start, Get Case, Has Account, No Account, Get Contacts for Account, Any Contacts, Loop ACs, Add Contacts to Collection, Select Contact, Update Case, and End.'
 		],
 		screenshots: [
 			{
-				title: 'Flow entry screen',
-				description: 'Shows the guided entry experience used to capture the information needed for matching.'
+				title: 'Flow Builder design',
+				description: 'Shows the Auto-Layout flow with the account check, contact filtering, and case update path.'
 			},
 			{
-				title: 'Account selection logic',
-				description: 'Illustrates the decision path used to identify the correct account record.'
+				title: 'No-account branch',
+				description: 'Shows the path where the user sees a no-account message and exits cleanly.'
 			},
 			{
-				title: 'Post-save result',
-				description: 'Shows the successful record update and the cleaner support handoff.'
+				title: 'Filtered contact selection',
+				description: 'Shows the side-panel experience that only presents Contacts linked to the selected Account.'
 			}
 		]
 	},
@@ -251,14 +272,14 @@ function renderScreenshots(items) {
 		.map(
 			(item) => `
 				<figure class="shot-card">
-					<div class="shot-frame">
+					${item.image ? `<img class="shot-image" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" />` : `<div class="shot-frame">
 						<div class="shot-mock-window">
 							<div class="shot-mock-line"></div>
 							<div class="shot-mock-line short"></div>
 							<div class="shot-mock-card"></div>
 							<div class="shot-mock-card"></div>
 						</div>
-					</div>
+					</div>`}
 					<figcaption class="shot-caption">
 						<strong>${escapeHtml(item.title)}</strong>
 						${escapeHtml(item.description)}
@@ -289,23 +310,44 @@ function renderProject(project) {
 				<ul class="summary-list">
 					<li>
 						<strong>Business Case</strong>
-						The problem the business needed to solve and why it mattered.
+						${project.businessCase[0]}
 					</li>
 					<li>
 						<strong>Solution Design</strong>
-						The architecture and operating pattern used to solve it.
+						${project.solutionDesign[0]}
 					</li>
 					<li>
 						<strong>POC</strong>
-						How the idea was proven before the full rollout.
+						${project.poc[0]}
 					</li>
 					<li>
 						<strong>Implementation</strong>
-						The delivery steps, validation, and release approach.
+						${project.implementation[0]}
 					</li>
 				</ul>
 			</aside>
 		</section>
+
+		${project.acceptanceCriteria ? `
+		<section class="content-card">
+			<h2>Acceptance Criteria</h2>
+			<ul>${renderList(project.acceptanceCriteria)}</ul>
+		</section>
+		` : ''}
+
+		${project.flowSteps ? `
+		<section class="content-card">
+			<h2>Flow Design Summary</h2>
+			<ul>${renderList(project.flowSteps)}</ul>
+		</section>
+		` : ''}
+
+		${project.solutionNotes ? `
+		<section class="content-card">
+			<h2>Solution Notes</h2>
+			<ul>${renderList(project.solutionNotes)}</ul>
+		</section>
+		` : ''}
 
 		<section class="content-grid">
 			<article class="content-card">
@@ -339,7 +381,7 @@ function renderProject(project) {
 			<article class="content-card">
 				<h2>Screenshots</h2>
 				<p>
-					These panels are ready for screenshots of the implemented solution. Add real images later by replacing the placeholder cards with project captures.
+					The screenshot section is intentionally left generalized here so the published page avoids exposing sensitive ticket or environment details.
 				</p>
 				<div class="case-study-gallery">
 					${renderScreenshots(project.screenshots)}
@@ -391,3 +433,7 @@ const project = projects[projectKey];
 
 const app = document.getElementById('app');
 app.innerHTML = project ? renderProject(project) : renderNotFound();
+
+if (project) {
+	document.title = `${project.title} | Nnamdi Udoye`;
+}
