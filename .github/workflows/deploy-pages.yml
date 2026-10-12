@@ -27,10 +27,17 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Stage portfolio files
+        run: |
+          mkdir -p _portfolio
+          cp index.html favicon.svg linkedin-profile.jpg .nojekyll _portfolio/
+          cp Nnamdi_Udoye_Salesforce_CV_2026-10-12.docx Nnamdi_Udoye_Salesforce_CV_2026-10-12.pdf _portfolio/
+          cp -R projects _portfolio/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: WilfredandKaizer-Website
+          path: _portfolio
 
       - name: Deploy to GitHub Pages
         id: deployment
